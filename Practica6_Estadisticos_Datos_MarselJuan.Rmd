@@ -198,9 +198,9 @@ mosaicplot(tc, xlab = 'ALG', ylab = 'ANM', color = rainbow(length(levels(df$ALG.
 ```{r Solucion_Ej7, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 df_num <- df %>% select(ends_with('.num'))
 
-matriz_cov <- cov(df_num, use = "pairwise.complete.obs")
-matriz_corr_Pearson <- cor(df_num,method = c("pearson"), use = "pairwise.complete.obs")
-matriz_corr_Spearman <- cor(df_num,method = c("spearman"), use = "pairwise.complete.obs")
+matriz_cov <- cov(df_num, use = "complete.obs")
+matriz_corr_Pearson <- cor(df_num,method = c("pearson"), use = "complete.obs")
+matriz_corr_Spearman <- cor(df_num,method = c("spearman"), use = "complete.obs")
 
 matriz_cov
 
@@ -216,11 +216,11 @@ La correlación de Pearson sirve para cuando la relación entre dos variables es
 Para comprobarlo, vamos a aplicar una función no lineal a una de las variables y a calcular la correlación usando los métodos de Pearson y Spearman. Compruébalo entre las variables `sqrt(ALG.num)` y `MD.num`, comparando con los resultados anteriores. 
 
 ```{r Solucion_Ej7 bis, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-df_num_2 <- df_num %>% mutate(ALG.num = (ALG.num)**0.5)
+df_num_2 <- df_num %>% mutate(ALG.num_0.5 = (ALG.num)**0.5) %>% select(-ALG.num)
 
-matriz_cov_2 <- cov(df_num_2, use = "pairwise.complete.obs")
-matriz_corr_Pearson_2 <- cor(df_num_2,method = c("pearson"), use = "pairwise.complete.obs")
-matriz_corr_Spearman_2 <- cor(df_num_2,method = c("spearman"), use = "pairwise.complete.obs")
+matriz_cov_2 <- cov(df_num_2, use = "complete.obs")
+matriz_corr_Pearson_2 <- cor(df_num_2,method = c("pearson"), use = "complete.obs")
+matriz_corr_Spearman_2 <- cor(df_num_2,method = c("spearman"), use = "complete.obs")
 
 matriz_cov_2
 
@@ -235,11 +235,7 @@ Dibuja las matrices de correlación del conjunto de notas numéricas.
 Podemos usar `pairs` del paquete base o bien `ggcorr` y `ggpairs` de la librería `GGally`.
 
 ```{r Solucion_Ej8, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-ggpairs(matriz_cov)
-
-ggpairs(matriz_corr_Pearson)
-
-ggpairs(matriz_corr_Spearman)
+ggpairs(df_num)
 ```
 
 # Análisis bivariante de variables categóricas
