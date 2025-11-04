@@ -90,6 +90,7 @@ Comentarios  |  Campo de texto libre para incluir comentarios que consideres sob
 ```{r Solucion_Ej1, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 library(readr)
 library(dplyr)
+library(tidyr)
 
 df <- read_delim("data/NosAutoanalizamos_TD2019 - Hoja 1 - Clean.tsv", 
     delim = "\t", escape_double = FALSE, 
@@ -137,7 +138,13 @@ etc    |
 
 
 ```{r Solucion_Ej3, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-
+df %>% summarise(across(ends_with('.num'), .fns =list(Mean = ~mean(.,na.rm=T),
+                                               STD = ~sd(.,na.rm=T),
+                                               Median = ~median(.,na.rm=T),
+                                               IQR = ~IQR(.,na.rm=T)))) %>% 
+  pivot_longer(cols=names(.),names_to='Name', values_to='Value') %>% 
+  separate(Name,into=c('Asignatura','Estadistico'), sep='.num_') %>% 
+  pivot_wider(names_from = Estadistico,values_from=Value)
 ```
 
 ## Ejercicio 4: Distribución de datos
