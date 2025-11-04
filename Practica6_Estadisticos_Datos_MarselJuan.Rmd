@@ -177,7 +177,13 @@ Vamos a calcular la frecuencia de cada valor en las variables categóricas de ca
   * Representa la tabla de contingencia usando `mosaicplot`.
 
 ```{r Solucion_Ej6, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+table(df$ALG.cat)
+table(df$ANM.cat)
 
+tc <- table(df$ALG.cat,df$ANM.cat)
+tc
+
+mosaicplot(tc, xlab = 'ALG', ylab = 'ANM', color = rainbow(length(levels(df$ALG.cat))))
 ```
 
 # Análisis bivariante de variables numéricas
@@ -188,7 +194,17 @@ Vamos a calcular la frecuencia de cada valor en las variables categóricas de ca
   * Compara los resultados para el coeficiente de correlación de Pearson (para variables numéricas) y de Spearman (para variables numéricas ordinales).
 
 ```{r Solucion_Ej7, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+df_num <- df %>% select(ends_with('.num'))
 
+matriz_cov <- cov(df_num, use = "pairwise.complete.obs")
+matriz_corr_Pearson <- cor(df_num,method = c("pearson"), use = "pairwise.complete.obs")
+matriz_corr_Spearman <- cor(df_num,method = c("spearman"), use = "pairwise.complete.obs")
+
+matriz_cov
+
+matriz_corr_Pearson
+
+matriz_corr_Spearman
 ```
 
 La correlación de Pearson sirve para cuando la relación entre dos variables es lineal, mientras que la de Spearman es robusta frente a relaciones no lineales en datos ordenados.
@@ -198,7 +214,17 @@ La correlación de Pearson sirve para cuando la relación entre dos variables es
 Para comprobarlo, vamos a aplicar una función no lineal a una de las variables y a calcular la correlación usando los métodos de Pearson y Spearman. Compruébalo entre las variables `sqrt(ALG.num)` y `MD.num`, comparando con los resultados anteriores. 
 
 ```{r Solucion_Ej7 bis, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+df_num <- df_num %>% mutate(ALG.num = (ALG.num)**0.5)
 
+matriz_cov <- cov(df_num, use = "pairwise.complete.obs")
+matriz_corr_Pearson <- cor(df_num,method = c("pearson"), use = "pairwise.complete.obs")
+matriz_corr_Spearman <- cor(df_num,method = c("spearman"), use = "pairwise.complete.obs")
+
+matriz_cov
+
+matriz_corr_Pearson
+
+matriz_corr_Spearman
 ```
 
 ## Ejercicio 8: Representación gráfica de correlación entre variables
