@@ -88,10 +88,6 @@ Comentarios  |  Campo de texto libre para incluir comentarios que consideres sob
    * Usando `mutate(across())` (junto con `ends_with` y `as.factor`).
 
 ```{r Solucion_Ej1, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-library(readr)
-library(dplyr)
-library(tidyr)
-
 df <- read_delim("data/NosAutoanalizamos_TD2019 - Hoja 1 - Clean.tsv", 
     delim = "\t", escape_double = FALSE, 
     trim_ws = TRUE)
@@ -155,7 +151,8 @@ Representa gráficamente la curva de notas de la asignatura ALG estimando la dis
   - Compara el resultado con la media de las notas para esa asignatura. Puedes marcar dicha media en el gráfico con `geom_point` o con `geom_vline()` especificando el parámetro `xintercept`.
 
 ```{r Solucion_Ej4, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-
+ggplot(df, aes(x = ALG.num)) + geom_histogram(aes(y=after_stat(density))) +
+  geom_density()
 ```
 
 ## Ejercicio 5: Test de normalidad de la distribución de datos
