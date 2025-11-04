@@ -88,16 +88,27 @@ Comentarios  |  Campo de texto libre para incluir comentarios que consideres sob
    * Usando `mutate(across())` (junto con `ends_with` y `as.factor`).
 
 ```{r Solucion_Ej1, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+library(readr)
+library(dplyr)
 
-
+df <- read_delim("data/NosAutoanalizamos_TD2019 - Hoja 1 - Clean.tsv", 
+    delim = "\t", escape_double = FALSE, 
+    trim_ws = TRUE)
 ```
+
+```{r}
+df <- df %>% mutate(across(ends_with('.cat'), as.factor))
+```
+
 
 ## Ejercicio 2: Inspección visual
 
 Inspecciona visualmente los valores del conjunto de datos (`View`) y ordena de mayor a menor y de menor a mayor cada variable.
 
 ```{r Solucion_Ej2, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+# Para observar las otras variables cambiamos la columna de dentro del desc
 
+df %>% arrange(desc(ALG.num)) %>% View()
 ```
 
 # Análisis univariante de variables numéricas
