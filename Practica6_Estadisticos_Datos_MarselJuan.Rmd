@@ -151,8 +151,10 @@ Representa gráficamente la curva de notas de la asignatura ALG estimando la dis
   - Compara el resultado con la media de las notas para esa asignatura. Puedes marcar dicha media en el gráfico con `geom_point` o con `geom_vline()` especificando el parámetro `xintercept`.
 
 ```{r Solucion_Ej4, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-ggplot(df, aes(x = ALG.num)) + geom_histogram(aes(y=after_stat(density))) +
-  geom_density()
+ggplot(df, aes(x = ALG.num)) + 
+  geom_histogram(aes(y=after_stat(density))) +
+  geom_density(color= 'blue') + 
+  geom_vline(xintercept = mean(df$ALG.num,na.rm=T), color = 'red')
 ```
 
 ## Ejercicio 5: Test de normalidad de la distribución de datos
@@ -214,17 +216,17 @@ La correlación de Pearson sirve para cuando la relación entre dos variables es
 Para comprobarlo, vamos a aplicar una función no lineal a una de las variables y a calcular la correlación usando los métodos de Pearson y Spearman. Compruébalo entre las variables `sqrt(ALG.num)` y `MD.num`, comparando con los resultados anteriores. 
 
 ```{r Solucion_Ej7 bis, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
-df_num <- df_num %>% mutate(ALG.num = (ALG.num)**0.5)
+df_num_2 <- df_num %>% mutate(ALG.num = (ALG.num)**0.5)
 
-matriz_cov <- cov(df_num, use = "pairwise.complete.obs")
-matriz_corr_Pearson <- cor(df_num,method = c("pearson"), use = "pairwise.complete.obs")
-matriz_corr_Spearman <- cor(df_num,method = c("spearman"), use = "pairwise.complete.obs")
+matriz_cov_2 <- cov(df_num_2, use = "pairwise.complete.obs")
+matriz_corr_Pearson_2 <- cor(df_num_2,method = c("pearson"), use = "pairwise.complete.obs")
+matriz_corr_Spearman_2 <- cor(df_num_2,method = c("spearman"), use = "pairwise.complete.obs")
 
-matriz_cov
+matriz_cov_2
 
-matriz_corr_Pearson
+matriz_corr_Pearson_2
 
-matriz_corr_Spearman
+matriz_corr_Spearman_2
 ```
 
 ## Ejercicio 8: Representación gráfica de correlación entre variables
@@ -233,7 +235,11 @@ Dibuja las matrices de correlación del conjunto de notas numéricas.
 Podemos usar `pairs` del paquete base o bien `ggcorr` y `ggpairs` de la librería `GGally`.
 
 ```{r Solucion_Ej8, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+ggpairs(matriz_cov)
 
+ggpairs(matriz_corr_Pearson)
+
+ggpairs(matriz_corr_Spearman)
 ```
 
 # Análisis bivariante de variables categóricas
