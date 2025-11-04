@@ -178,7 +178,6 @@ Vamos a calcular la frecuencia de cada valor en las variables categóricas de ca
 
 ```{r Solucion_Ej6, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
 
-
 ```
 
 # Análisis bivariante de variables numéricas
