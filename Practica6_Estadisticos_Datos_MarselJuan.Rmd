@@ -160,7 +160,10 @@ ggplot(df, aes(x = ALG.num)) + geom_histogram(aes(y=after_stat(density))) +
 Compara la distribución de probabilidad de las notas de la asignatura ANM con la de una Gaussiana empleando la función `qqPlot` (quantile-quantile plot) de la librería `car`, que representa gráficamente los cuantiles de la distribución analizada respecto de los de una distribución normal (Gaussiana).
 
 ```{r Solucion_Ej5, include=TRUE, echo=TRUE, eval=TRUE, results=TRUE}
+library(car)
 
+qqPlot(df$ANM.num, 
+       main = "Q-Q Plot: Notas de ANM vs. Distribución Normal")
 ```
 
 # Análisis univariante de variables categóricas
